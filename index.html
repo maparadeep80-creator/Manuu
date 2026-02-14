@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Romantic Love Vault - Manu</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:black;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+  color:white;
+}
+
+/* STARS */
+.star{
+  position:absolute;
+  color:white;
+  font-size:10px;
+  animation:fall linear infinite;
+  opacity:0.7;
+}
+
+/* HEARTS */
+.heart{
+  position:absolute;
+  color:pink;
+  font-size:16px;
+  animation:fall linear infinite;
+  opacity:0.8;
+}
+
+@keyframes fall{
+  from{transform:translateY(-10vh)}
+  to{transform:translateY(110vh)}
+}
+
+/* Lock Screen */
+#lockScreen{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+#lockScreen h1{margin-bottom:20px;}
+input{
+  padding:10px;
+  border-radius:15px;
+  border:none;
+  text-align:center;
+}
+button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;
+  border-radius:20px;
+  background:#ff4da6;
+  color:white;
+  cursor:pointer;
+}
+
+/* Main */
+#main{
+  display:none;
+  text-align:center;
+  padding-top:20px;
+}
+
+#name{
+  font-family:'Dancing Script', cursive;
+  font-size:70px;
+  color:#ff4da6;
+  margin-bottom:10px;
+}
+
+/* Media */
+#mediaBox{
+  width:85%;
+  margin:auto;
+}
+#mediaBox img{
+  width:100%;
+  border-radius:20px;
+}
+
+/* Glass Quote */
+.quote{
+  margin-top:15px;
+  padding:15px 20px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.4);
+  border-radius:20px;
+  box-shadow:0 0 15px rgba(255,255,255,0.3);
+}
+
+/* Floating Manu Text */
+.manuText{
+  position:absolute;
+  font-size:12px;
+  color:white;
+  animation:floatUp 2s ease-out forwards;
+}
+@keyframes floatUp{
+  from{opacity:1; transform:translateY(0);}
+  to{opacity:0; transform:translateY(-120px);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="song" loop>
+  <source src="khoobsurat.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+  <h1>For Manu Only 👑</h1>
+  <input type="password" id="pass" placeholder="Enter password">
+  <button onclick="unlock()">Unlock 💖</button>
+  <p id="error"></p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <div id="name">Manu</div>
+
+  <button onclick="toggleMusic()">Play / Pause Song 🎵</button>
+
+  <div id="mediaBox">
+    <img id="photo" src="photo1.jpg">
+    <div class="quote" id="quote">
+      You came into my life unexpectedly… and made it beautiful ❤️
+    </div>
+  </div>
+
+  <button onclick="next()">Next 💕</button>
+</div>
+
+<script>
+/* FULLSCREEN */
+function goFullScreen(){
+  let el=document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen();
+  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}
+
+/* STARS */
+for(let i=0;i<40;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.innerText="✦";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(s);
+}
+
+/* HEARTS */
+for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤";
+  h.style.left=Math.random()*100+"%";
+  h.style.animationDuration=(7+Math.random()*6)+"s";
+  document.body.appendChild(h);
+}
+
+/* PASSWORD */
+function unlock(){
+  let p=document.getElementById("pass").value.toLowerCase();
+  if(p==="deep"){
+    document.getElementById("lockScreen").style.display="none";
+    document.getElementById("main").style.display="block";
+    document.getElementById("song").play();
+    goFullScreen();
+  } else {
+    document.getElementById("error").innerText="Wrong password 💔";
+  }
+}
+
+/* MUSIC */
+function toggleMusic(){
+  let s=document.getElementById("song");
+  if(s.paused) s.play(); else s.pause();
+}
+
+/* NEXT CLICK ANIMATION */
+function next(){
+  createManuText();
+}
+
+/* FLOATING MANU TEXT */
+function createManuText(){
+  for(let i=0;i<100;i++){
+    let span=document.createElement("span");
+    span.className="manuText";
+    span.innerText="Manu";
+    span.style.left=Math.random()*window.innerWidth+"px";
+    span.style.top=Math.random()*window.innerHeight+"px";
+    document.body.appendChild(span);
+    setTimeout(()=>span.remove(),2000);
+  }
+}
+</script>
+
+</body>
+</html>
